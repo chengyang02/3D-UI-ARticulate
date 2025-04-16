@@ -28,7 +28,7 @@ public class Clock : MonoBehaviour
 
         if (second != previousSecond)
         {
-            Debug.Log($"Current Time: {now.Hour:00}:{now.Minute:00}:{now.Second:00}");
+            // Debug.Log($"Current Time: {now.Hour:00}:{now.Minute:00}:{now.Second:00}");
             previousSecond = second;
         }
     }

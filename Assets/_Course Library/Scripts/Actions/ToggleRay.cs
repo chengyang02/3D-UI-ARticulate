@@ -16,7 +16,7 @@ public class ToggleRay : MonoBehaviour
     public XRDirectInteractor directInteractor = null;
 
     private XRRayInteractor rayInteractor = null;
-    private bool isSwitched = false;
+    private bool isRay = true;
 
     private void Awake()
     {
@@ -24,16 +24,23 @@ public class ToggleRay : MonoBehaviour
         SwitchInteractors(false);
     }
 
+    public void ToggleRayInteractor() 
+    {
+        if (!isRay) {
+            ActivateRay(); 
+        } else {
+            DeactivateRay(); 
+        }
+    }
+
     public void ActivateRay()
     {
-        if (!TouchingObject() || forceToggle)
-            SwitchInteractors(true);
+        SwitchInteractors(true);
     }
 
     public void DeactivateRay()
     {
-        if (isSwitched)
-            SwitchInteractors(false);
+        SwitchInteractors(false);
     }
 
     private bool TouchingObject()
@@ -45,8 +52,8 @@ public class ToggleRay : MonoBehaviour
 
     private void SwitchInteractors(bool value)
     {
-        isSwitched = value;
+        isRay = value;
         rayInteractor.enabled = value;
-        directInteractor.enabled = !value;
+        // directInteractor.enabled = !value;
     }
 }

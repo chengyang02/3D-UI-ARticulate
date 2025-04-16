@@ -137,6 +137,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+  visionOSBundleVersion: 1.0
+  tvOSBundleVersion: 1.0
   bundleVersion: 0.1.0
   preloadedAssets: []
   metroInputSource: 0
@@ -160,7 +162,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.com.Unity.CreateWithVR.VRRoom
-    Standalone: com.com.Aaron.CreateWithVR.Test-3-with-quest-support
+    Standalone: com.com.Unity.CreateWithVR.VR-Room
   buildNumber:
     Standalone: 0
     VisionOS: 0
