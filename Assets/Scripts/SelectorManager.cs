@@ -28,7 +28,7 @@ public class SelectorManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("current selected number: " + currentTargets.Count);
+        // Debug.Log("current selected number: " + currentTargets.Count);
     }
 
     public void ToggleSelector()

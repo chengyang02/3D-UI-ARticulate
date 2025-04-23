@@ -1,0 +1,348 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6231769220151914700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3089149428123676624}
+  - component: {fileID: 4220237798144857124}
+  m_Layer: 0
+  m_Name: WayPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3089149428123676624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6231769220151914700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 80, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4220237798144857124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6231769220151914700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30128ef3c35c5854f963fa0abb8e1833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layers:
+  - clampStyle: 4
+    indicators:
+    - markerScript: {fileID: 0}
+      canvasGroup: {fileID: 0}
+      marker: {fileID: 0}
+      target: {fileID: 0}
+      targetDirection: {x: 0, y: 0, z: 0}
+      screenPosition: {x: 0, y: 0, z: 0}
+      freescreenPosition: {x: 0, y: 0, z: 0}
+      screenEdgePosition: {x: 0, y: 0}
+      offset: {x: 0, y: 2}
+      canTrack: 0
+      isOnEdge: 0
+      rawIsOnEdge: 0
+      targetAngleDirection: 0
+      unfold: 0
+      sectionIndex: 0
+      distance: 0
+      enabled: 1
+      layer_index: 0
+      id: 55538
+      index: 0
+      isInRange: 0
+    maxDistance: 5
+    minDistance: 0
+    offset: 0
+    radiusFromCenter: 150
+    fadeSpeed: 10
+    unfold: 0
+    enabled: 1
+    focusAngle: 20
+    name: Keys
+    index: 0
+    id: 42621
+  - clampStyle: 0
+    indicators:
+    - markerScript: {fileID: 0}
+      canvasGroup: {fileID: 0}
+      marker: {fileID: 0}
+      target: {fileID: 0}
+      targetDirection: {x: 0, y: 0, z: 0}
+      screenPosition: {x: 0, y: 0, z: 0}
+      freescreenPosition: {x: 0, y: 0, z: 0}
+      screenEdgePosition: {x: 0, y: 0}
+      offset: {x: 0, y: 0}
+      canTrack: 0
+      isOnEdge: 0
+      rawIsOnEdge: 0
+      targetAngleDirection: 0
+      unfold: 1
+      sectionIndex: 2
+      distance: 0
+      enabled: 1
+      layer_index: 1
+      id: 62060
+      index: 0
+      isInRange: 0
+    - markerScript: {fileID: 0}
+      canvasGroup: {fileID: 0}
+      marker: {fileID: 0}
+      target: {fileID: 0}
+      targetDirection: {x: 0, y: 0, z: 0}
+      screenPosition: {x: 0, y: 0, z: 0}
+      freescreenPosition: {x: 0, y: 0, z: 0}
+      screenEdgePosition: {x: 0, y: 0}
+      offset: {x: 0, y: 0}
+      canTrack: 0
+      isOnEdge: 0
+      rawIsOnEdge: 0
+      targetAngleDirection: 0
+      unfold: 0
+      sectionIndex: 0
+      distance: 0
+      enabled: 1
+      layer_index: 1
+      id: 44741
+      index: 1
+      isInRange: 0
+    - markerScript: {fileID: 0}
+      canvasGroup: {fileID: 0}
+      marker: {fileID: 0}
+      target: {fileID: 0}
+      targetDirection: {x: 0, y: 0, z: 0}
+      screenPosition: {x: 0, y: 0, z: 0}
+      freescreenPosition: {x: 0, y: 0, z: 0}
+      screenEdgePosition: {x: 0, y: 0}
+      offset: {x: 0, y: 0}
+      canTrack: 0
+      isOnEdge: 0
+      rawIsOnEdge: 0
+      targetAngleDirection: 0
+      unfold: 0
+      sectionIndex: 0
+      distance: 0
+      enabled: 1
+      layer_index: 1
+      id: 90252
+      index: 2
+      isInRange: 0
+    maxDistance: 100
+    minDistance: 5
+    offset: 0
+    radiusFromCenter: 150
+    fadeSpeed: 3
+    unfold: 1
+    enabled: 1
+    focusAngle: 360
+    name: Markers
+    index: 1
+    id: 42621
+  - clampStyle: 0
+    indicators:
+    - markerScript: {fileID: 0}
+      canvasGroup: {fileID: 0}
+      marker: {fileID: 0}
+      target: {fileID: 0}
+      targetDirection: {x: 0, y: 0, z: 0}
+      screenPosition: {x: 0, y: 0, z: 0}
+      freescreenPosition: {x: 0, y: 0, z: 0}
+      screenEdgePosition: {x: 0, y: 0}
+      offset: {x: 0, y: 122}
+      canTrack: 0
+      isOnEdge: 0
+      rawIsOnEdge: 0
+      targetAngleDirection: 0
+      unfold: 0
+      sectionIndex: 0
+      distance: 0
+      enabled: 1
+      layer_index: 2
+      id: 65357
+      index: 0
+      isInRange: 0
+    maxDistance: 100
+    minDistance: 5
+    offset: 0
+    radiusFromCenter: 150
+    fadeSpeed: 3
+    unfold: 0
+    enabled: 1
+    focusAngle: 360
+    name: Arrow
+    index: 2
+    id: 42621
+  - clampStyle: 4
+    indicators:
+    - markerScript: {fileID: 0}
+      canvasGroup: {fileID: 0}
+      marker: {fileID: 0}
+      target: {fileID: 0}
+      targetDirection: {x: 0, y: 0, z: 0}
+      screenPosition: {x: 0, y: 0, z: 0}
+      freescreenPosition: {x: 0, y: 0, z: 0}
+      screenEdgePosition: {x: 0, y: 0}
+      offset: {x: 0, y: 122}
+      canTrack: 0
+      isOnEdge: 0
+      rawIsOnEdge: 0
+      targetAngleDirection: 0
+      unfold: 0
+      sectionIndex: 0
+      distance: 0
+      enabled: 1
+      layer_index: 3
+      id: 5661
+      index: 0
+      isInRange: 0
+    maxDistance: 10
+    minDistance: 0
+    offset: 0
+    radiusFromCenter: 150
+    fadeSpeed: 10
+    unfold: 0
+    enabled: 1
+    focusAngle: 20
+    name: Dialogs
+    index: 3
+    id: 42621
+  - clampStyle: 0
+    indicators: []
+    maxDistance: 100
+    minDistance: 5
+    offset: 0
+    radiusFromCenter: 150
+    fadeSpeed: 3
+    unfold: 0
+    enabled: 1
+    focusAngle: 360
+    name: Spawn
+    index: 4
+    id: 14744
+  player: {fileID: 0}
+  mainCamera: {fileID: 0}
+  mainCanvas: {fileID: 0}
+  screenOffset: 0.01
+  SmoothClamp: 40
+  screenWidth: 0
+  screenHeight: 0
+  radiusX: 0
+  radiusY: 0
+  halfScreenWidth: 0
+  halfScreenHeight: 0
+  minX: 0
+  maxX: 0
+  minY: 0
+  maxY: 0
+  lastScreenSize: {x: 0, y: 0}
+  forwardPlayer: {x: 0, y: 0}
+  showDefaultInspector: 0
+  showGizmos: 1
+  collapseIndicators: 1
+  editAtPlayMode: 1
+  hideMarkerOnFold: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  floattest: 0
+  unfoldEditor: 0
+  unfoldSettings: 1
+  isAddingLayer: 0
+  isAddingIndicator: 0
+  isEditingLayer: 0
+  addMultiple: 0
+  isCopiedStyle: 0
+  editingIndicatorLayer:
+    clampStyle: 0
+    indicators: []
+    maxDistance: 100
+    minDistance: 5
+    offset: 0
+    radiusFromCenter: 150
+    fadeSpeed: 3
+    unfold: 0
+    enabled: 1
+    focusAngle: 360
+    name: 
+    index: 0
+    id: 0
+  markerAdd: {fileID: 0}
+  targetAdd: {fileID: 0}
+  markers: []
+  targets: []
+  indicatorStyleCopy:
+    free:
+      last_offset: {x: 263.99994, y: 313.49994, z: 221.30003, w: 271.30005}
+      offset: {x: 263.99994, y: 313.49994, z: 221.30003, w: 271.30005}
+      center_size: {x: 40, y: 40}
+      icon_conteiner_icon_size: {x: 20, y: 20}
+      arrow_size: {x: 6, y: 12}
+      label_size: {x: 100, y: 20}
+      center_offset: {x: 0.000061035156, y: -0.000076293945}
+      arrow_offset: {x: 39.99991, y: -0.000076293945}
+      label_offset: {x: 0.000061035156, y: -40}
+      ic_conteiner_label_offset: {x: 0, y: 0}
+      ic_conteiner_icon_offset: {x: 0, y: 0}
+      center_color: {r: 1, g: 1, b: 1, a: 1}
+      conteiner_label_color: {r: 0, g: 0, b: 0, a: 1}
+      conteiner_icon_color: {r: 0, g: 0, b: 0, a: 1}
+      label_color: {r: 1, g: 1, b: 1, a: 1}
+      center_label: e
+      label: Label
+      icon_conteiner_label_size: 17
+      label_font_size: 17
+      center_sprite: {fileID: 617090098, guid: 9109ca2d484a0aa4b81fb4c90fbb721c, type: 3}
+      icon_conteiner_sprite: {fileID: 0}
+      arrow_sprite: {fileID: 972937613, guid: d2180490130a17e45ac6d0ff66840504, type: 3}
+      use_label: 0
+      use_distance: 1
+      use_center_label: 0
+      use_center_icon: 0
+      use_arrow: 0
+      rotateCenter: 0
+      rotateLabel: 0
+    edge:
+      last_offset: {x: 104.54999, y: 165.54999, z: 149.2, w: 207.2}
+      offset: {x: 258.24994, y: 319.24994, z: 217.30005, w: 275.30005}
+      center_size: {x: 40, y: 40}
+      icon_conteiner_icon_size: {x: 20, y: 20}
+      arrow_size: {x: 6, y: 12}
+      label_size: {x: 100, y: 20}
+      center_offset: {x: -0.000061035156, y: -0.000061035156}
+      arrow_offset: {x: 26.49997, y: -0.000061035156}
+      label_offset: {x: -0.000061035156, y: -39.999985}
+      ic_conteiner_label_offset: {x: 0, y: 0}
+      ic_conteiner_icon_offset: {x: 0, y: 0}
+      center_color: {r: 1, g: 1, b: 1, a: 1}
+      conteiner_label_color: {r: 0, g: 0, b: 0, a: 1}
+      conteiner_icon_color: {r: 0, g: 0, b: 0, a: 1}
+      label_color: {r: 1, g: 1, b: 1, a: 1}
+      center_label: e
+      label: Label
+      icon_conteiner_label_size: 17
+      label_font_size: 17
+      center_sprite: {fileID: 617090098, guid: 9109ca2d484a0aa4b81fb4c90fbb721c, type: 3}
+      icon_conteiner_sprite: {fileID: 0}
+      arrow_sprite: {fileID: 972937613, guid: d2180490130a17e45ac6d0ff66840504, type: 3}
+      use_label: 0
+      use_distance: 0
+      use_center_label: 0
+      use_center_icon: 0
+      use_arrow: 1
+      rotateCenter: 0
+      rotateLabel: 0

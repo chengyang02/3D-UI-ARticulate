@@ -1,0 +1,33 @@
+Indicator
+
+enabled : enable and disable the marker on the screen.       
+layer_index : index of the indicator's layer.
+index : index of the indicator in the layer indicators' list.
+distance : distance between the player and the target in the world.
+isInRange : determinates if the player is in the valid range where the indicator is supposed to work in.
+
+
+IndicatorLayer
+
+name : name of the layer.
+index: index of the layer in the layers' list.
+id: unique identification of the layer.
+
+
+Manager.refs
+
+public void AddIndicator(int layerId, RectTransform marker, Transform target)
+
+allows the user add a indicator to a wished layer by code.
+
+ public IndicatorReference GetIndicator(object identifier = null)
+
+allows the user return a IndicatorReference that contains the indicator and layer references by looking for the marker or an Id from an indicator.
+
+public void RemoveIndicator(RectTransform marker)
+
+removes the marker from the layer that holds it.
+
+public Vector2 forwardPlayer;
+
+allows you to set the forward of the player in 2d mode projects. it handles transform.right by default.
