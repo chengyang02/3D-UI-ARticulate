@@ -45,4 +45,9 @@ public class WaypointController : MonoBehaviour
             indicatorInstance.localRotation = Quaternion.Euler(0, 0, -angle);
         }
     }
+
+    void OnDestroy()
+    {
+        Destroy(indicatorInstance.gameObject);
+    }
 }
