@@ -16,6 +16,7 @@
     "com.unity.visualscripting": "1.9.4",
     "com.unity.xr.interaction.toolkit": "2.6.3",
     "com.unity.xr.management": "4.4.1",
+    "com.unity.xr.oculus": "4.5.1",
     "com.unity.xr.openxr": "1.14.0",
     "voice2action": "https://github.com/yang-su2000/Voice2Action.git",
     "com.unity.modules.ai": "1.0.0",
