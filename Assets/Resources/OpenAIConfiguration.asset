@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7ca99533264e939ed60ffc81f03d20, type: 3}
   m_Name: OpenAIConfiguration
   m_EditorClassIdentifier: 
-  apiKey: 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
-  organizationId: org-6Tawfhzd6zDQiIySqmZA6oSK
+  apiKey: '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     '
+  organizationId: org-Wyg6iQi4xYrJS438K3dpKvzR
   useAzureOpenAI: 0
   proxyDomain: 
   resourceName: 
