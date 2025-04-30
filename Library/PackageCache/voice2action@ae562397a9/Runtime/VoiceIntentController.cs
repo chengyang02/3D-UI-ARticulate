@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 namespace Voice2Action
 {
     /// <summary>
@@ -157,24 +158,8 @@ namespace Voice2Action
         
         private void Awake()
         {
-            m_MyShapeControllerType = myShapeController.GetType();
-            DestroyImmediate(myShapeController);
-            myShapeController = null;
-            m_MyEmbeddingsType = myEmbeddings.GetType();
-            myEmbeddings.InitProperty(m_PropertyClassifier, m_PropertyExtractor, m_PropertyExecutor);
-            myEmbeddings.InitInteractable(interactable, m_MyShapeControllerType);
-            myEmbeddings.InitMyInteractable(interactable, myInteractable, m_MyShapeControllerType);
-            
-            List<string> propertyFunctionNames = new List<string>();
-            propertyFunctionNames.AddRange(m_PropertyExtractor.selectionGroup.properties);
-            propertyFunctionNames.AddRange(m_PropertyExtractor.modificationGroup.properties);
-            m_ToolDict = m_PropertyExecutor.InitFunctionCalls(m_MyShapeControllerType, propertyFunctionNames);
-            ShapeController.player = m_SceneManager.xrOriginCamera.gameObject;
-            InteractableTarget.sceneManager = m_SceneManager;
-            
-            m_AllControllers = FindObjectsOfType<ShapeController>();
-            m_SelectedControllers = new bool[m_AllControllers.Length];
-            for (int i = 0; i < m_SelectedControllers.Length; i++) m_SelectedControllers[i] = true;
+            RefreshControllers();
+
             m_AudioSource = GetComponent<AudioSource>();
             m_HistoryMessages = new List<string>();
             m_MessageGUI = new GUIStyle
@@ -215,6 +200,29 @@ namespace Voice2Action
             };
             m_ExpandResetAction.action.started += _ => ResetExpand();
         }
+
+        public void RefreshControllers()
+        {
+            m_MyShapeControllerType = myShapeController.GetType();
+            DestroyImmediate(myShapeController);
+            myShapeController = null;
+            m_MyEmbeddingsType = myEmbeddings.GetType();
+            myEmbeddings.InitProperty(m_PropertyClassifier, m_PropertyExtractor, m_PropertyExecutor);
+            myEmbeddings.InitInteractable(interactable, m_MyShapeControllerType);
+            myEmbeddings.InitMyInteractable(interactable, myInteractable, m_MyShapeControllerType);
+            
+            List<string> propertyFunctionNames = new List<string>();
+            propertyFunctionNames.AddRange(m_PropertyExtractor.selectionGroup.properties);
+            propertyFunctionNames.AddRange(m_PropertyExtractor.modificationGroup.properties);
+            m_ToolDict = m_PropertyExecutor.InitFunctionCalls(m_MyShapeControllerType, propertyFunctionNames);
+            ShapeController.player = m_SceneManager.xrOriginCamera.gameObject;
+            InteractableTarget.sceneManager = m_SceneManager;
+            
+            m_AllControllers = FindObjectsOfType<ShapeController>();
+            m_SelectedControllers = new bool[m_AllControllers.Length];
+            for (int i = 0; i < m_SelectedControllers.Length; i++) m_SelectedControllers[i] = true;
+        }
+
 
         private void Update()
         {
@@ -296,6 +304,7 @@ namespace Voice2Action
             UpdateMessageDisplay("<color=white>User:</color> <color=green>" + prompt + "</color>", m_Voice2ActionGUIScrollText);
             Dictionary<string, string> classifyDict = await m_PropertyClassifier.ClassifyProperty(prompt);
             var countControllers = 0;
+            // entry place for integrating our filtering feature 
             if (classifyDict.TryGetValue("select", out string selectionInput))
             {
                 OrderedDictionary selectDict = await m_PropertyExtractor.ExtractProperty("select", selectionInput);
@@ -318,7 +327,16 @@ namespace Voice2Action
                     var countProxy = 0;
                     for (int i = 0; i < m_SelectedControllers.Length; i++)
                     {
-                        if (!m_SelectedControllers[i]) continue;
+                        // filter out game object if they are already highlighted 
+                        GameObject obj = m_AllControllers[i].gameObject; 
+                        string tag = obj.tag;
+
+                        if (!m_SelectedControllers[i]) {
+                            if (tag == "highlighted") {
+                                tag = "Untagged";
+                            }
+                        }
+                        
                         countControllers++;
                         if (countProxy < SceneManager.k_MaxExpandNum)
                         {

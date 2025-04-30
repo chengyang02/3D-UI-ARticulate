@@ -9,6 +9,9 @@ public class SelectorManager : MonoBehaviour
     public Transform controllerTransform; 
     public GameObject selectionSpherePrefab;
     public XRRayInteractor rayInteractor;
+    public GameObject parentInteractable; 
+    private bool groupUpdateNeeded = false; 
+
 
     [Header("Settings")]
     public float offsetFromController = 0.5f;
@@ -17,7 +20,7 @@ public class SelectorManager : MonoBehaviour
     private HashSet<GameObject> currentTargets = new HashSet<GameObject>();
     public static SelectorManager Instance; 
 
-    void Start()
+    void Awake()
     {
         if (Instance == null) {
             Instance = this; 
@@ -26,10 +29,58 @@ public class SelectorManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // Debug.Log("current selected number: " + currentTargets.Count);
-    }
+    // void LateUpdate()
+    // {
+    //     if (!groupUpdateNeeded) return;
+
+    //     groupUpdateNeeded = false;
+
+    //     // var vic = FindObjectOfType<Voice2Action.VoiceIntentController>();
+    //     // Debug.Log(vic);
+    //     // vic?.RefreshControllers();
+
+    //     if (currentTargets.Count == 0) return;
+
+    //     // Unparent and destroy old tag groups
+    //     foreach (Transform child in parentInteractable.transform)
+    //     {
+    //         foreach (Transform obj in child)
+    //         {
+    //             obj.SetParent(null, true);
+    //         }
+    //         Destroy(child.gameObject);
+    //     }
+
+    //     Dictionary<string, GameObject> tagGroups = new Dictionary<string, GameObject>();
+
+    //     foreach (GameObject obj in currentTargets)
+    //     {
+    //         string tag = obj.tag;
+
+    //         if (!tagGroups.ContainsKey(tag))
+    //         {
+    //             GameObject group = new GameObject(tag);
+    //             group.transform.SetParent(parentInteractable.transform);
+    //             tagGroups[tag] = group;
+    //         }
+
+    //         var interactable = obj.GetComponent<XRGrabInteractable>();
+    //         bool wasEnabled = false;
+
+    //         if (interactable != null && interactable.enabled)
+    //         {
+    //             wasEnabled = true;
+    //             interactable.enabled = false; // disable before reparenting
+    //         }
+
+    //         obj.transform.SetParent(tagGroups[tag].transform, true);
+    //         Debug.Log($"[GroupFix] {obj.name} parented to {tagGroups[tag].name}");
+
+    //         if (wasEnabled)
+    //             interactable.enabled = true; // re-enable after parenting
+    //     }
+    // }
+
 
     public void ToggleSelector()
     {
@@ -82,10 +133,12 @@ public class SelectorManager : MonoBehaviour
     public void AddToSelection(GameObject obj)
     {
         currentTargets.Add(obj);
+        groupUpdateNeeded = true;
     }
 
     public void RemoveFromSelection(GameObject obj)
     {
         currentTargets.Remove(obj);
+        groupUpdateNeeded = true;
     }
 }

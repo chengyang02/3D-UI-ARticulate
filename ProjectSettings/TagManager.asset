@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Waypoint
+  - Cube
+  - Sphere
+  - highlighted
   layers:
   - Default
   - TransparentFX
