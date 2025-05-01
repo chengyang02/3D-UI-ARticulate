@@ -104,6 +104,27 @@ public class SelectorManager : MonoBehaviour
         }
     }
 
+    public void EnlargeSphere() {
+        if (selectionSphere == null) return;
+
+        float scaleSpeed = 0.5f; // units per second
+        float maxScale = 3.0f;
+        Vector3 newScale = selectionSphere.transform.localScale + Vector3.one * scaleSpeed * Time.deltaTime;
+        newScale = Vector3.Min(newScale, Vector3.one * maxScale);
+        selectionSphere.transform.localScale = newScale;
+    }
+    
+    public void ShrinkSphere() {
+        if (selectionSphere == null) return;
+
+        float scaleSpeed = 0.5f; // units per second
+        Vector3 newScale = selectionSphere.transform.localScale - Vector3.one * scaleSpeed * Time.deltaTime;
+        // Clamp to min size
+        float minScale = 0.1f;
+        newScale = Vector3.Max(newScale, Vector3.one * minScale);
+        selectionSphere.transform.localScale = newScale;
+    }
+
     public void ConfirmGroupSelection()
     {
         if (selectionSphere == null)
