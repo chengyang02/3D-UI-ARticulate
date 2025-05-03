@@ -13,7 +13,7 @@ public class SelectorManager : MonoBehaviour
     private bool groupUpdateNeeded = false; 
 
 
-    [Header("Settings")]
+    [Header("Settings")] 
     public float offsetFromController = 0.5f;
 
     private GameObject selectionSphere;

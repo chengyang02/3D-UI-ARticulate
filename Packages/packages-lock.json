@@ -444,6 +444,13 @@
       },
       "url": "https://package.openupm.com"
     },
+    "com.whisper.unity": {
+      "version": "https://github.com/Macoron/whisper.unity.git?path=/Packages/com.whisper.unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "529a628a915a97799e89e061af9cb7c71407124d"
+    },
     "voice2action": {
       "version": "https://github.com/yang-su2000/Voice2Action.git",
       "depth": 0,
