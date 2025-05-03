@@ -789,7 +789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 587639198}
-  - component: {fileID: 587639199}
+  - component: {fileID: 587639200}
   m_Layer: 0
   m_Name: Whisper
   m_TagString: Untagged
@@ -812,7 +812,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &587639199
+--- !u!114 &587639200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -821,7 +821,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 587639197}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9370225a2ca94276b870d5f87b0db55, type: 3}
+  m_Script: {fileID: 11500000, guid: 46aed19ffc206f542a7117e4554ae0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   logLevel: 1
@@ -1684,7 +1684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1337591121}
-  - component: {fileID: 1337591122}
+  - component: {fileID: 1337591123}
   m_Layer: 0
   m_Name: Demo
   m_TagString: Untagged
@@ -1707,7 +1707,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1337591122
+--- !u!114 &1337591123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1716,10 +1716,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1337591120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dab0f155db4c47a5899bb88df9102c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 725c1e9dc50faac4d91882687cfa3dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 587639199}
+  manager: {fileID: 587639200}
   clip: {fileID: 8300000, guid: 2f8a92ae57b4341c68e81202d049ca31, type: 3}
   streamSegments: 1
   echoSound: 1

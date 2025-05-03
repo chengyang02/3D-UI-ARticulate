@@ -9,7 +9,7 @@ namespace Whisper.Samples
     /// </summary>
     public class StreamingSampleMic : MonoBehaviour
     {
-        public WhisperManager whisper;
+        public WhisperController whisper;
         public MicrophoneRecord microphoneRecord;
     
         [Header("UI")] 
@@ -40,6 +40,25 @@ namespace Whisper.Samples
             }
             else
                 microphoneRecord.StopRecord();
+        
+            buttonText.text = microphoneRecord.IsRecording ? "Stop" : "Record";
+        }
+
+        public void StartRecording() {
+            if (!microphoneRecord.IsRecording)
+            {
+                _stream.StartStream();
+                microphoneRecord.StartRecord();
+            }
+        
+            buttonText.text = microphoneRecord.IsRecording ? "Stop" : "Record";
+        }
+
+        public void EndRecording() {
+            if (microphoneRecord.IsRecording)
+            {
+                microphoneRecord.StopRecord();
+            }
         
             buttonText.text = microphoneRecord.IsRecording ? "Stop" : "Record";
         }
