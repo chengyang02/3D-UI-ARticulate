@@ -24,6 +24,7 @@ public class VoiceCommandPipeline : MonoBehaviour
 
             // update
             lastTranscript = transcript.text;
+            Debug.Log("transcript is: " + lastTranscript);
         }
     }
 

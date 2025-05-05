@@ -28,6 +28,7 @@ namespace Whisper.Samples
             } else {
                 Destroy(this);
             }
+
             _stream = await whisper.CreateStream(microphoneRecord);
             _stream.OnResultUpdated += OnResult;
             _stream.OnSegmentUpdated += OnSegmentUpdated;
@@ -54,21 +55,21 @@ namespace Whisper.Samples
         public void StartRecording() {
             if (!microphoneRecord.IsRecording)
             {
-                isRecording = true; 
                 _stream.StartStream();
                 microphoneRecord.StartRecord();
             }
         
+            isRecording = true; 
             buttonText.text = microphoneRecord.IsRecording ? "Stop" : "Record";
         }
 
         public void EndRecording() {
             if (microphoneRecord.IsRecording)
             {
-                isRecording = false; 
                 microphoneRecord.StopRecord();
             }
-        
+
+            isRecording = false; 
             buttonText.text = microphoneRecord.IsRecording ? "Stop" : "Record";
         }
     

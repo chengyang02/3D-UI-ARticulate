@@ -55,9 +55,23 @@ public class ActionExecutioner : MonoBehaviour
     {
         var command = new ActionCommand();
         var lines = response.Split('\n');
+        int num = 0; 
         foreach (var line in lines)
         {
+            num++; 
             if (string.IsNullOrWhiteSpace(line)) continue;
+            if (num == 1 && !line.Contains("action_type")) {
+                if (line.Contains("select")) {
+                    command.ActionType = "selection"; 
+                } else if (line.Contains("rotation")) {
+                    command.ActionType = "rotation";
+                } else if (line.Contains("translation")) {
+                    command.ActionType = "translation";
+                } else if (line.Contains("scale")) {
+                    command.ActionType = "scale";
+                }
+                continue; 
+            }
             var parts = line.Split(new[] { ':' }, 2);
             if (parts.Length != 2) continue;
 
@@ -71,5 +85,4 @@ public class ActionExecutioner : MonoBehaviour
         }
         return command;
     }
-
 }

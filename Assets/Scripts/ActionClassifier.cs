@@ -21,7 +21,10 @@ public class ActionClassifier : MonoBehaviour
         }
 
         prompt = "You are an intelligent assistant that classifies user voice commands into structured action templates. Here are the possible classification categories:\n\nACTION SCHEMA:\n";
-        prompt += GenerateActionSchemaPrompt(); 
+        prompt += GenerateActionSchemaPrompt() + "\n"; 
+
+        var objectTypesLine = $"Valid object types: {string.Join(", ", ActionSchemaRegistry.Instance.ObjectTypes)}.";
+        prompt += objectTypesLine + "\n";
         // ClassifyText(userInput); 
     }
 

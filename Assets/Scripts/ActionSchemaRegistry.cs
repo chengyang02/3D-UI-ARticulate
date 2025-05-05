@@ -41,6 +41,12 @@ public class ActionSchemaRegistry : MonoBehaviour
         }
     }
 
+    public List<string> ObjectTypes = new List<string>
+    {
+        "cube",
+        "sphere"
+    };
+
     private Dictionary<string, ActionSchema> schemas;
 
     public static readonly List<ActionArgument> TargetDescriptionArgs = new()

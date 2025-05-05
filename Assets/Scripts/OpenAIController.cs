@@ -37,7 +37,7 @@ public class OpenAIController : MonoBehaviour
         Debug.Log("Getting response...");
         // define system message 
         messages = new List<ChatMessage> {
-            new ChatMessage(ChatMessageRole.System, @"You are a strict command parser. You must extract commands using the action schema below. Your output must follow the exact format:
+            new ChatMessage(ChatMessageRole.System, @"""You are a strict command parser. You must extract commands using the action schema below. Your output must follow the exact format:
 
             action_type: <action type>
             <argument name 1>: <value>
@@ -45,7 +45,18 @@ public class OpenAIController : MonoBehaviour
             ...
             <argument name N>: <value>
 
-            Do not explain or generalize. Action type can only be these values: selection, translation, rotation, scale. If a command uses a different word (like filter or pick), map it to the closest valid action. Do not invent new actions. You must extract all relevant arguments for the identified action type based on the user's command. Do not omit valid optional arguments if they are mentioned. You must use only 'action_type' and argument names from the schema such as 'object_type'. Only output the structure exactly as shown in the examples.")
+            Rules:
+            - Only use action types from this list: selection, translation, rotation, scale.
+            - Only use object types from the list provided in the prompt (e.g., cube, sphere, table, chair).
+            - Always include all required arguments for the selected action type.
+            - Include optional arguments if they are clearly present in the user's command.
+            - Never add explanations, summaries, or extra text before or after the output.
+            -  You must use only 'action_type' and argument names from the schema such as 'object_type'.
+            - If the command uses synonyms like pick, grab, or filter, map them to the closest valid action (e.g., selection).
+
+            You must output the structured template only — no full sentences or commentary.")
+
+            // Do not explain or generalize. Action type can only be these values: selection, translation, rotation, scale. If a command uses a different word (like filter or pick), map it to the closest valid action. Do not invent new actions. You must extract all relevant arguments for the identified action type based on the user's command. Do not omit valid optional arguments if they are mentioned. You must use only 'action_type' and argument names from the schema such as 'object_type'. Only output the structure exactly as shown in the examples."
         };
 
         if (userInput.Length < 1)
