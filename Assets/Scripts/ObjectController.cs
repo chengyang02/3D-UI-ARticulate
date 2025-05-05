@@ -18,11 +18,18 @@ public class ObjectController : MonoBehaviour
         outlinable = GetComponent<Outlinable>();
         xRGrabInteractable = GetComponent<XRGrabInteractable>();
 
+        if (outlinable == null)
+            Debug.LogError("Outlinable component is missing on " + gameObject.name);
+        if (xRGrabInteractable == null)
+            Debug.LogError("XRGrabInteractable component is missing on " + gameObject.name);
+
         // disable outline at the beginning 
-        outlinable.enabled = false; 
+        if (outlinable != null)
+            outlinable.enabled = false; 
 
         // add listener for when object is selected or not 
-        xRGrabInteractable.selectEntered.AddListener(OnSelectEntered);
+        if (xRGrabInteractable != null)
+            xRGrabInteractable.selectEntered.AddListener(OnSelectEntered);
         // xRGrabInteractable.selectExited.AddListener(OnSelectExited);
     }
 
@@ -70,7 +77,8 @@ public class ObjectController : MonoBehaviour
     void OnDestroy()
     {
         // Clean up event listeners
-        xRGrabInteractable.selectEntered.RemoveListener(OnSelectEntered);
+        if (xRGrabInteractable != null)
+            xRGrabInteractable.selectEntered.RemoveListener(OnSelectEntered);
         // xRGrabInteractable.selectExited.RemoveListener(OnSelectExited);
     }
 }
