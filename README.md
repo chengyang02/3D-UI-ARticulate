@@ -1,8 +1,8 @@
-# (May5 - voice command - manipulation)🎙️ Voice Interaction Extension – 3D-UI-ARticulate
-
-This README documents the additions made to support **voice-based manipulation** of scene objects using OpenAI's Whisper in the Unity project `3D-UI-ARticulate`.
+# 3D-UI-ARticulate
 
 ---
+## (📅 May5 - voice command - manipulation)
+Here documents the additions made to support **voice-based manipulation** of scene objects using OpenAI's Whisper in the Unity project `3D-UI-ARticulate`.
 
 ## ✅ Summary of What Was Added
 
