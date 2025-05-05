@@ -17,7 +17,7 @@ public class SelectorManager : MonoBehaviour
     public float offsetFromController = 0.5f;
 
     private GameObject selectionSphere;
-    private HashSet<GameObject> currentTargets = new HashSet<GameObject>();
+    public HashSet<GameObject> currentTargets = new HashSet<GameObject>();
     public static SelectorManager Instance; 
 
     void Awake()

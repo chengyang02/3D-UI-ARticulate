@@ -65,3 +65,6 @@ sysinfo.txt
 # OS files
 .DS_Store
 
+# model file
+Assets/Whisper_Assets/StreamingAssets/Whisper/ggml-medium.en.bin
+Assets/Whisper_Assets/StreamingAssets/Whisper/ggml-medium.en.bin.meta

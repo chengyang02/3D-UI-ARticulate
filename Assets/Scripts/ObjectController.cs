@@ -9,7 +9,6 @@ public class ObjectController : MonoBehaviour
     private Outlinable outlinable;
     private XRGrabInteractable xRGrabInteractable;
     private SelectorManager selectorManager;
-    public bool highlighted = false; 
 
     // Start is called before the first frame update
     void Start()
@@ -35,14 +34,7 @@ public class ObjectController : MonoBehaviour
 
     void Update()
     {
-        if (gameObject.tag == "Untagged") {
-            highlighted = false;
-        }
-        if (highlighted) {
-            outlinable.enabled = true;
-        } else {
-            outlinable.enabled = false;
-        }
+
     }
 
     void OnSelectEntered(SelectEnterEventArgs args)
@@ -60,13 +52,6 @@ public class ObjectController : MonoBehaviour
 
     public void ToggleHighlight() {
         outlinable.enabled = !outlinable.enabled; 
-        if (outlinable.enabled) {
-            highlighted = true;
-            gameObject.tag = "highlighted";
-        } else {
-            highlighted = false; 
-            gameObject.tag = "Untagged";
-        }
     }
 
     void OnSelectExited(SelectExitEventArgs args)

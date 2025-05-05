@@ -18,9 +18,16 @@ namespace Whisper.Samples
         public Text text;
         public ScrollRect scroll;
         private WhisperStream _stream;
+        public bool isRecording = false; 
+        public static StreamingSampleMic Instance; 
 
         private async void Start()
         {
+            if (Instance == null) {
+                Instance = this; 
+            } else {
+                Destroy(this);
+            }
             _stream = await whisper.CreateStream(microphoneRecord);
             _stream.OnResultUpdated += OnResult;
             _stream.OnSegmentUpdated += OnSegmentUpdated;
@@ -47,6 +54,7 @@ namespace Whisper.Samples
         public void StartRecording() {
             if (!microphoneRecord.IsRecording)
             {
+                isRecording = true; 
                 _stream.StartStream();
                 microphoneRecord.StartRecord();
             }
@@ -57,6 +65,7 @@ namespace Whisper.Samples
         public void EndRecording() {
             if (microphoneRecord.IsRecording)
             {
+                isRecording = false; 
                 microphoneRecord.StopRecord();
             }
         

@@ -29,7 +29,7 @@ public class OpenAIController : MonoBehaviour
     {
         // This line gets your API key (and could be slightly different on Mac/Linux)
         // api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
-        api = new OpenAIAPI("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");
+        api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
     }
 
     public async Task<string> GetResponse(string userInput)
@@ -37,7 +37,15 @@ public class OpenAIController : MonoBehaviour
         Debug.Log("Getting response...");
         // define system message 
         messages = new List<ChatMessage> {
-            new ChatMessage(ChatMessageRole.System, "You are a helpful assistant who classifies voice commands into structured actions.")
+            new ChatMessage(ChatMessageRole.System, @"You are a strict command parser. You must extract commands using the action schema below. Your output must follow the exact format:
+
+            action_type: <action type>
+            <argument name 1>: <value>
+            <argument name 2>: <value>
+            ...
+            <argument name N>: <value>
+
+            Do not explain or generalize. Action type can only be these values: selection, translation, rotation, scale. If a command uses a different word (like filter or pick), map it to the closest valid action. Do not invent new actions. You must extract all relevant arguments for the identified action type based on the user's command. Do not omit valid optional arguments if they are mentioned. You must use only 'action_type' and argument names from the schema such as 'object_type'. Only output the structure exactly as shown in the examples.")
         };
 
         if (userInput.Length < 1)
@@ -55,20 +63,24 @@ public class OpenAIController : MonoBehaviour
         messages.Add(userMessage);
 
         // Send the entire chat to OpenAI to get the next message
-        var chatResult = await api.Chat.CreateChatCompletionAsync(new ChatRequest()
-        {
-            Model = Model.ChatGPTTurbo,
-            Temperature = 0.9,
-            MaxTokens = 50,
-            Messages = messages
-        });
+        try {
+            var chatResult = await api.Chat.CreateChatCompletionAsync(new ChatRequest()
+            {
+                Model = Model.ChatGPTTurbo,
+                Temperature = 0.1,
+                MaxTokens = 4096,
+                Messages = messages
+            });
+            // Get the response message
+            ChatMessage responseMessage = new ChatMessage();
+            responseMessage.Role = chatResult.Choices[0].Message.Role;
+            responseMessage.Content = chatResult.Choices[0].Message.Content;
+            Debug.Log(string.Format("{0}: {1}", responseMessage.rawRole, responseMessage.Content));
 
-        // Get the response message
-        ChatMessage responseMessage = new ChatMessage();
-        responseMessage.Role = chatResult.Choices[0].Message.Role;
-        responseMessage.Content = chatResult.Choices[0].Message.Content;
-        Debug.Log(string.Format("{0}: {1}", responseMessage.rawRole, responseMessage.Content));
-
-        return responseMessage.Content; 
+            return responseMessage.Content; 
+        } catch (System.Exception ex) {
+            Debug.Log(ex.ToString());
+            return "error";
+        }
     }
 }

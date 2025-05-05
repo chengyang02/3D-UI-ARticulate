@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ActionClassifier : MonoBehaviour
@@ -8,13 +9,20 @@ public class ActionClassifier : MonoBehaviour
     private string prompt; 
     public string userInput; 
     private string response; 
+    public static ActionClassifier Instance = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        prompt = "You are an intelligent assistant that classifies user voice commands into structured action templates using the following action schema:\n\nACTION SCHEMA:\n";
+        if (Instance == null) {
+            Instance = this; 
+        } else {
+            Destroy(this); 
+        }
+
+        prompt = "You are an intelligent assistant that classifies user voice commands into structured action templates. Here are the possible classification categories:\n\nACTION SCHEMA:\n";
         prompt += GenerateActionSchemaPrompt(); 
-        ClassifyText(userInput); 
+        // ClassifyText(userInput); 
     }
 
     // Update is called once per frame
@@ -23,8 +31,8 @@ public class ActionClassifier : MonoBehaviour
         
     }
 
-    public string ClassifyText(string userInput) {
-        prompt += $@"Now, classify the following user command into an action type and arguments.
+    public async Task<string> ClassifyText(string userInput) {
+        prompt += $@"Now, classify the following user command into an action type and all possible arguments.
 
             FORMAT:
             action_type: <action type>
@@ -38,18 +46,20 @@ public class ActionClassifier : MonoBehaviour
             color: red
 
             EXAMPLE 2
-            User Command: move the table forward by 2 meters
+            User Command: move the blue table forward by 2 meters
             Output:
             action_type: translation
-            target: table
+            object_type: table
+            color: blue
             direction: forward
             distance: 2 meters
 
             EXAMPLE 3
-            User Command: rotate the blue chair 90 degrees around Y
+            User Command: rotate the green chair 90 degrees around Y
             Output:
             action_type: rotation
-            target: blue chair
+            object_type: chair
+            color: green
             axis: Y
             angle: 90 degrees
 
@@ -61,19 +71,20 @@ public class ActionClassifier : MonoBehaviour
         Debug.Log("Prompt is" + prompt);
 
         // run OPENAI API to get the output
-        GetLLMResponse(prompt); 
+        response = await OpenAIController.Instance.GetResponse(userInput);
+        Debug.Log("response: " + response);
         return response; 
     }
 
-    IEnumerator GetLLMResponse(string userInput) {
-        var task = OpenAIController.Instance.GetResponse(userInput);
-        while (!task.IsCompleted) {
-            yield return null; 
-        }
+    // IEnumerator GetLLMResponse(string userInput) {
+    //     var task = 
+    //     while (!task.IsCompleted) {
+    //         yield return null; 
+    //     }
         
-        response = task.Result;
-        Debug.Log("Response returned");
-    }
+    //     response = task.Result;
+    //     Debug.Log("Response returned");
+    // }
 
     string GenerateActionSchemaPrompt()
     {
