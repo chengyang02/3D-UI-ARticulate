@@ -9,6 +9,9 @@ TagManager:
   - Cube
   - Sphere
   - highlighted
+  - Box
+  - Trail
+  - Interactable
   layers:
   - Default
   - TransparentFX
