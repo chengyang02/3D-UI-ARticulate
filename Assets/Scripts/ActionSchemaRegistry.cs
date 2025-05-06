@@ -44,7 +44,16 @@ public class ActionSchemaRegistry : MonoBehaviour
     public List<string> ObjectTypes = new List<string>
     {
         "cube",
-        "sphere"
+        "sphere",
+        "hat",
+        "plant",
+        "book",
+        "notebook",
+        "chair",
+        "table",
+        "camera",
+        "speaker",
+        "plant"
     };
 
     private Dictionary<string, ActionSchema> schemas;
