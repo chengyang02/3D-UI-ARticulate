@@ -3,6 +3,6 @@ using UnityEngine;
 
 public class VoiceControllable : MonoBehaviour
 {
-    public string objectType = "book";
-    public string color = "blue";
+    public string objectType; // e.g., "book"
+    public string color;      // e.g., "blue"
 }

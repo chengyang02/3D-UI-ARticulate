@@ -73,10 +73,22 @@ public class ActionClassifier : MonoBehaviour
 
         Debug.Log("Prompt is" + prompt);
 
-        // run OPENAI API to get the output
+        // ✅ Call OpenAI to get classification result
         response = await OpenAIController.Instance.GetResponse(userInput);
         Debug.Log("response: " + response);
-        return response; 
+
+        // ✅ Call VoiceCommandHandler to actually execute the action
+        var handler = FindObjectOfType<VoiceCommandHandler>();
+        if (handler != null)
+        {
+            handler.HandleVoiceCommand(response);  // this will parse and run the action
+        }
+        else
+        {
+            Debug.LogWarning("❗ VoiceCommandHandler not found.");
+        }
+
+        return response;
     }
 
     // IEnumerator GetLLMResponse(string userInput) {

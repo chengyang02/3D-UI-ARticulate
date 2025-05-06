@@ -89,14 +89,32 @@ namespace Whisper.Samples
             print($"Segment updated: {segment.Result}");
         }
         
+        private string _lastCmd = ""; 
+
         private void OnSegmentFinished(WhisperResult segment)
         {
-            print($"Segment finished: {segment.Result}");
+            var raw = segment.Result.Split('.')[0].Trim();
+            if (string.IsNullOrWhiteSpace(raw) || raw == _lastCmd)
+                return;
+
+            _lastCmd = raw;
+            Debug.Log($"▶️ New command: {raw}");
+
+            var handler = FindObjectOfType<VoiceCommandHandler>();
+            if (handler != null)
+                handler.HandleVoiceCommand(raw);
         }
+
+
         
         private void OnFinished(string finalResult)
         {
-            print("Stream finished!");
+            Debug.Log($"🎤 Final transcription: {finalResult}");
+
+            string cleaned = finalResult.Split('.')[0].Trim();
+            if (string.IsNullOrWhiteSpace(cleaned)) return;
+
+            _ = ActionClassifier.Instance.ClassifyText(cleaned); // 👈 classify + execute
         }
     }
 }
