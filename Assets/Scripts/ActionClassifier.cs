@@ -42,11 +42,13 @@ public class ActionClassifier : MonoBehaviour
             <argument name>: <value>
 
             EXAMPLE 1
-            User Command: select the red cube
+            User Command: select two red cube on the left
             Output:
             action_type: selection
             object_type: cube
+            quantity: 2
             color: red
+            location: left
 
             EXAMPLE 2
             User Command: move the blue table forward by 2 meters
