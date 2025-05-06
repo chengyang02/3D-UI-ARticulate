@@ -37,7 +37,7 @@ public class OpenAIController : MonoBehaviour
         Debug.Log("Getting response...");
         // define system message 
         messages = new List<ChatMessage> {
-            new ChatMessage(ChatMessageRole.System, @"""You are a strict command parser. You must extract commands using the action schema below. Your output must follow the exact format:
+            new ChatMessage(ChatMessageRole.System, @"You are a strict command parser. You must extract commands using the action schema below. Your output must follow the exact key-value format:
 
             action_type: <action type>
             <argument name 1>: <value>
@@ -51,8 +51,28 @@ public class OpenAIController : MonoBehaviour
             - Always include all required arguments for the selected action type.
             - Include optional arguments if they are clearly present in the user's command.
             - Never add explanations, summaries, or extra text before or after the output.
-            -  You must use only 'action_type' and argument names from the schema such as 'object_type'.
+            -  You must use only 'action_type' and argument names from the schema such as 'object_type' as keyword.
             - If the command uses synonyms like pick, grab, or filter, map them to the closest valid action (e.g., selection).
+            - You must only use argument keys listed in the schema (e.g., object_type, location). Do not invent or rename keys such as 'place', 'position', etc.
+            - If the user refers to a location (e.g., 'on the right', 'to the left'), it must be mapped to the argument 'location'.
+            - - Always express the value of 'quantity' as a number (e.g., 1, 2, 3), not as a word (e.g., one, two, three).
+            - All keys must be from these possible action arguments:
+            ACTION SCHEMA:
+                selection:
+                required_args: object_type
+                optional_args: color, quantity, location, size, name
+
+                translation:
+                required_args: object_type, direction
+                optional_args: color, quantity, location, size, name, distance
+
+                rotation:
+                required_args: object_type, axis
+                optional_args: color, quantity, location, size, name, angle
+
+                scale:
+                required_args: object_type
+                optional_args: color, quantity, location, size, name, scale_factor, axis
 
             You must output the structured template only — no full sentences or commentary.")
 

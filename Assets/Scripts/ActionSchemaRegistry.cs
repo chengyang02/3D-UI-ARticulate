@@ -54,7 +54,7 @@ public class ActionSchemaRegistry : MonoBehaviour
         new ActionArgument("object_type", true),
         new ActionArgument("color", false),
         new ActionArgument("quantity", false),
-        new ActionArgument("spatial_ref", false),
+        new ActionArgument("location", false),
         new ActionArgument("size", false),
         new ActionArgument("name", false),
     };
@@ -135,5 +135,10 @@ public class ActionSchemaRegistry : MonoBehaviour
 
         error = null;
         return true;
+    }
+
+    public string GetObjectTypesPromptLine()
+    {
+        return $"Valid object types: {string.Join(", ", ObjectTypes)}.";
     }
 }
