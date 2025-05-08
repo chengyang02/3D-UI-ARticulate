@@ -93,20 +93,12 @@ namespace Whisper.Samples
 
         private void OnSegmentFinished(WhisperResult segment)
         {
-            var raw = segment.Result.Split('.')[0].Trim();
-            if (string.IsNullOrWhiteSpace(raw) || raw == _lastCmd)
-                return;
-
-            _lastCmd = raw;
-            Debug.Log($"▶️ New command: {raw}");
-
-            var handler = FindObjectOfType<VoiceCommandHandler>();
-            if (handler != null)
-                handler.HandleVoiceCommand(raw);
+            // 注释掉命令处理，避免多次触发
+            // var manager = VoiceCommandManager.Instance;
+            // if (manager != null)
+            //     manager.ProcessVoiceCommand();
         }
 
-
-        
         private void OnFinished(string finalResult)
         {
             Debug.Log($"🎤 Final transcription: {finalResult}");
@@ -114,7 +106,9 @@ namespace Whisper.Samples
             string cleaned = finalResult.Split('.')[0].Trim();
             if (string.IsNullOrWhiteSpace(cleaned)) return;
 
-            _ = ActionClassifier.Instance.ClassifyText(cleaned); // 👈 classify + execute
+            var manager = VoiceCommandManager.Instance;
+            if (manager != null)
+                manager.ProcessVoiceCommand();
         }
     }
 }
