@@ -11,6 +11,7 @@ public class VoiceCommandManager : MonoBehaviour
     public static VoiceCommandManager Instance { get; private set; }
     public Text transcript;
     private string lastTranscript;
+    private int commandVersion = 0; // 每次新指令+1
 
     [Serializable]
     private class VoiceAction
@@ -74,14 +75,18 @@ public class VoiceCommandManager : MonoBehaviour
 
     public async void ProcessVoiceCommand()
     {
-        Debug.Log($"🗣️ Processing command: {transcript.text}");
+        commandVersion++;
+        int thisCommand = commandVersion;
+        string currentTranscript = transcript.text;
+
+        Debug.Log($"🗣️ Processing command: {currentTranscript} (version {thisCommand})");
         
         // First try to parse as JSON if it's from LLM
-        if (transcript.text.Trim().StartsWith("{"))
+        if (currentTranscript.Trim().StartsWith("{"))
         {
             try
             {
-                VoiceAction action = JsonUtility.FromJson<VoiceAction>(transcript.text);
+                VoiceAction action = JsonUtility.FromJson<VoiceAction>(currentTranscript);
                 if (action != null && action.target != null)
                 {
                     ExecuteStructuredAction(action);
@@ -95,8 +100,15 @@ public class VoiceCommandManager : MonoBehaviour
         }
 
         // If not JSON, try to classify with LLM
-        string response = await ActionClassifier.Instance.ClassifyText(transcript.text);
+        string response = await ActionClassifier.Instance.ClassifyText(currentTranscript);
         Debug.Log($"🤖 LLM response: {response}");
+
+        // 检查是否是最新指令
+        if (thisCommand != commandVersion)
+        {
+            Debug.Log("⚠️ This command is outdated, skipping execution.");
+            return;
+        }
 
         // Parse and execute the classified response
         ExecuteStructuredAction(JsonUtility.FromJson<VoiceAction>(response));
