@@ -29,7 +29,8 @@ public class OpenAIController : MonoBehaviour
     {
         // This line gets your API key (and could be slightly different on Mac/Linux)
         // api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
-        api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
+        //api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
+        api = new OpenAIAPI("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");
     }
 
     public async Task<string> GetResponse(string userInput)
