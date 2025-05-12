@@ -60,7 +60,7 @@ public class VoiceCommandHandler : MonoBehaviour
         string[] actions = { "move", "rotate", "scale", "color" };
         string[] colors = { "blue", "brown","red", "green", "yellow", "black", "white" };
         string[] types = { "book","notebook","hat","cube", "chair", "table", "plant", "camera", "speaker","cube",
-        "sphere", "tree", "windmill" };
+        "sphere", "tree", "windmill", "chest", "shelves", "rug", "tv", "fireplace", "couch", "hook", "mirror", "picture" };
 
         string actionType = actions.FirstOrDefault(a => lowerCommand.Contains(a));
         string color = colors.FirstOrDefault(c => lowerCommand.Contains(c));
@@ -129,7 +129,7 @@ public class VoiceCommandHandler : MonoBehaviour
     {
         string[] colors = { "blue", "brown","red", "green", "yellow", "black", "white" };
         string[] types = { "book","notebook","hat","cube", "chair", "table", "plant", "camera", "speaker","cube",
-        "sphere", "tree", "windmill" };
+        "sphere", "tree", "windmill", "chest", "shelves", "rug", "tv", "fireplace", "couch", "hook", "mirror", "picture" };
 
         string color = colors.FirstOrDefault(c => command.Contains(c));
         string type = types.FirstOrDefault(t => command.Contains(t));
