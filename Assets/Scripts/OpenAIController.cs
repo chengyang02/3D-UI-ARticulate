@@ -29,8 +29,7 @@ public class OpenAIController : MonoBehaviour
     {
         // This line gets your API key (and could be slightly different on Mac/Linux)
         // api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
-        //api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
-        api = new OpenAIAPI("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");
+        api = new OpenAIAPI(Environment.GetEnvironmentVariable("OPENAI_API_KEY", EnvironmentVariableTarget.User));
     }
 
     public async Task<string> GetResponse(string userInput)
@@ -56,7 +55,14 @@ public class OpenAIController : MonoBehaviour
             - If the command uses synonyms like pick, grab, or filter, map them to the closest valid action (e.g., selection).
             - You must only use argument keys listed in the schema (e.g., object_type, location). Do not invent or rename keys such as 'place', 'position', etc.
             - If the user refers to a location (e.g., 'on the right', 'to the left'), it must be mapped to the argument 'location'.
-            - - Always express the value of 'quantity' as a number (e.g., 1, 2, 3), not as a word (e.g., one, two, three).
+            - Always express the value of 'quantity' as a number (e.g., 1, 2, 3), not as a word (e.g., one, two, three).
+            - Always express the value of 'distance' as a number only (e.g., 1, 2.5). Do not include units like 'meters' or 'm'.
+            - Always express 'angle' as a number only (e.g., 45, 90). Do not include units like 'degrees' or 'deg'.
+            - Always express 'scale_factor' as a number only (e.g., 1.5, 2). Do not include words like 'times', 'x', or 'scale'.
+            - The value of 'axis' must be one of: x, y, or z. Do not use full words like 'vertical', 'horizontal', or 'up'.
+
+
+
             - All keys must be from these possible action arguments:
             ACTION SCHEMA:
                 selection:
