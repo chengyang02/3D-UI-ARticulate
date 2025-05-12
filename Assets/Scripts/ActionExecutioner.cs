@@ -177,7 +177,7 @@ public class ActionExecutioner : MonoBehaviour
     {
         dir = dir.ToLower();
         if (dir.Contains("forward") || dir.Contains("further") || dir.Contains("farther")) return Camera.main.transform.forward;
-        if (dir.Contains("back") || dir.Contains("closer") || dir.Contains("nearer")) return -Camera.main.transform.forward;
+        if (dir.Contains("back") || dir.Contains("close") || dir.Contains("near")) return -Camera.main.transform.forward;
         if (dir.Contains("left")) return -Camera.main.transform.right;
         if (dir.Contains("right")) return Camera.main.transform.right;
         if (dir.Contains("up")) return Vector3.up;
