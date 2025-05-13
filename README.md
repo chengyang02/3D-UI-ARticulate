@@ -1,69 +1,101 @@
-# 3D-UI-ARticulate
+# 🧠 XR Interaction System with LLMs
 
----
-## (📅 May5 - voice command - manipulation)
-Here documents the additions made to support **voice-based manipulation** of scene objects using OpenAI's Whisper in the Unity project `3D-UI-ARticulate`.
+**Team Name**: *ARticulate*  
+**Team Members**:  
+- Cheng Yang (cy2748)  
+- Linlin Zhang (lz2981)  
+- Charlie Zou (jz3331)  
+- Tans Rosen (njr2145)  
 
-## ✅ Summary of What Was Added
-
-- Added **voice command parsing** to manipulate objects in the scene (`move`, `rotate`, `scale`, `color`).
-- Implemented `VoiceCommandHandler.cs` to process spoken commands like:  
-  👉 “Rotate blue book” or “Scale red cube”
-- Attached `VoiceControllable.cs` to each interactable object so they can be matched by type and color.
-- Modified `StreamingSampleMic.cs` (Whisper sample) to call our `VoiceCommandHandler`.
-- Verified end-to-end voice interaction from mic input → Whisper → scene manipulation.
+**Advisor**: Ben Yang
 
 ---
 
-## 🧩 File Changes
+## 🔍 Overview
 
-### 🆕 Scripts
+In this project, our team uses **Large Language Models (LLMs)** to improve user experience and create a more natural and intuitive way of interacting with virtual reality environments.
 
-- `Assets/Scripts/VoiceActions/VoiceCommandHandler.cs`  
-  → Parses voice text & applies transformations.
+Users can use controllers (e.g., **ray selection** or **sphere selection**) or **voice commands** to:
 
-- `Assets/Scripts/VoiceActions/VoiceControllable.cs`  
-  → Attach to any object you want to manipulate via voice.
+- Select groups of objects  
+- Refine their selections  
+- Manipulate objects (e.g., **scale**, **rotate**, **move**)  
 
-### 📝 Modified
-
-- `Assets/Whisper_Assets/Samples/5 - Streaming/StreamingSampleMic.cs`  
-  → Hooked up voice parsing after Whisper detects a segment.
+The system also allows users to **label** and **navigate** to different parts of the scene to support easier wayfinding. Our goal is to make interaction with complex 3D environments as seamless as having a conversation.
 
 ---
 
-## 🛠️ Setup Instructions
+## 🎮 How to Use (Playmode Instructions)
 
-### 1. Add `VoiceManager` GameObject
-- In your scene, create a new empty GameObject called **`VoiceManager`**
-- Attach the `VoiceCommandHandler` script to it.
-- Tag this object if needed (e.g., for reference from other scripts).
+### 🎯 Selection
 
-### 2. Connect to Whisper Sample
-- Select the **Microphone** GameObject (from Whisper sample scene).
-- In its **`StreamingSampleMic`** component, make sure the `text`, `button`, and `scroll` fields are set.
-- Ensure the following line can find `VoiceManager` in scene:
-  ```csharp
-  var handlerGO = GameObject.Find("VoiceManager");
+#### 🔦 Ray Selection (Right Controller)
+- Press **`Y`** to activate the right controller.
+- Aim at an object.
+- Press **`G`** to select it.
 
-### 3. Prepare Interactable Objects
-- For every object you want to control via voice:
+#### 🟠 Sphere Selection (Right Controller)
+- Press **`Y`** to activate the right controller.
+- Press **`N`** to spawn the selection sphere.
 
--（1) Attach the VoiceControllable script.
+##### 🎚️ Adjust Sphere Size (Left Controller)
+- Press **`T`** to activate the left controller.
+- Press **`B`** to make the sphere bigger.
+- Press **`N`** to make it smaller.
 
-- (2)Set the objectType and color in Inspector (e.g., book, blue)
+✅ Selected objects will have a **yellow highlight**.
 
-- (2)Tag it as Interactable so it's picked up in search.
+---
 
-### 4. Supported Voice Commands
-Format: <action> <color> <type>
+### 🎙️ Voice Command Recording
 
-Examples:
+After selecting objects, record your command in one of two ways:
 
-"rotate blue book"
+#### Option 1: UI Buttons
+- Click **Record** on the UI panel to begin.
+- Click **Stop** to finish.
 
-"move red cube"
+#### Option 2: Keyboard Shortcut
+- Press **`B`** to **start recording**.
+- Press **`B`** again to **stop recording**.
 
-"scale green chair"
+---
 
-"color yellow plant"
+### 📍 Waypoint Creation (Left Controller)
+
+- Press **`T`** to activate the left controller.
+- When the ray turns **white**, **left-click** to create a waypoint.
+- To cancel: click again without moving the ray.
+
+---
+
+### 🚀 Teleporting (Right Controller)
+
+- Press **`Y`** to activate the right controller.
+- When the ray turns **white** and a **spinning teleport icon** appears:
+  - Press **`G`** to teleport.
+
+⚠️ **First-time teleport bug**:  
+If you fall underground, press **`Q`** to move up or **`E`** to move down. Once you move up and the **spinning teleport icon** appears again on the floor, teleporting will work normally
+
+---
+
+## 🗣️ Example Voice Commands
+
+### ✅ Specific Object Manipulation
+- “Scale the trees by a factor of 1.5.”
+- “Rotate the car 90 degrees around the Y axis.”
+- “Move the bench forward by 2 meters.”
+
+### 🗣️ Natural Language Prompts
+- “I want the tree to be a little taller.”
+- “Turn the car upside down.”
+- “Make the bench smaller.”
+- “Move the trees closer to the buildings.”
+- “I want the buildings to rotate to the left.”
+- “Flip the bench backward.”
+
+⚠️ **Note**: The system uses LLMs to interpret voice commands.  
+The result **may not exactly match your spoken prompt**, as the model may fill in missing details like direction, amount, or axis based on context and past patterns.
+
+---
