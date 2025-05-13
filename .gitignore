@@ -71,3 +71,4 @@ Assets/Whisper_Assets/StreamingAssets/Whisper/ggml-medium.en.bin.meta
 
 # Whisper model files
 Assets/Whisper_Assets/StreamingAssets/Whisper/*.bin
+Assets/Whisper_Assets/StreamingAssets/Whisper/*.bin.meta

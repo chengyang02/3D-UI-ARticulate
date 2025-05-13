@@ -37,10 +37,6 @@ public class ActionClassifier : MonoBehaviour
     public async Task<string> ClassifyText(string userInput) {
         prompt += $@"Now, classify the following user command into an action type and all possible arguments.
 
-            FORMAT:
-            action_type: <action type>
-            <argument name>: <value>
-
             EXAMPLE 1
             User Command: select two red cube on the left
             Output:

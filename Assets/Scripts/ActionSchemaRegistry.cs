@@ -49,22 +49,10 @@ public class ActionSchemaRegistry : MonoBehaviour
         "plant",
         "book",
         "notebook",
-        "chair",
-        "table",
-        "camera",
-        "speaker",
-        "plant" ,
-        "chest",
-        "shelves",
-        "rug",
-        "tv",
-        "fireplace",
-        "couch",
-        "hook",
-        "mirror",
-        "picture",
+        "bench",
+        "car",
+        "building",
         "tree",
-        "windmill"
     };
 
     private Dictionary<string, ActionSchema> schemas;
