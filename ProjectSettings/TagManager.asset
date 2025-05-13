@@ -6,12 +6,16 @@ TagManager:
   tags:
   - Ground
   - Waypoint
-  - Cube
-  - Sphere
   - highlighted
   - Box
   - Trail
   - Interactable
+  - cube
+  - sphere
+  - car
+  - building
+  - tree
+  - bench
   layers:
   - Default
   - TransparentFX

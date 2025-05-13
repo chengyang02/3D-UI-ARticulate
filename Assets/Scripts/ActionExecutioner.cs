@@ -42,19 +42,155 @@ public class ActionExecutioner : MonoBehaviour
 
     public void Execute(string response) {
         ActionCommand command = ParseLLMResponse(response); 
-        if (command.ActionType == "selection") {
-            ExecuteSelection(command); 
-        } else {
+        switch (command.ActionType)
+        {
+            case "selection":
+                ExecuteSelection(command);
+                break;
+            case "translation":
+                ExecuteTranslation(command);
+                break;
+            case "rotation":
+                ExecuteRotation(command);
+                break;
+            case "scale":
+                ExecuteScale(command);
+                break;
+            default:
+                Debug.LogWarning($"Unknown action type: {command.ActionType}");
+                break;
+        }
+    }
 
+    public void ExecuteTranslation(ActionCommand actionCommand)
+    {
+        // ensure required argument exists
+        if (!actionCommand.Arguments.ContainsKey("direction"))
+        {
+            Debug.LogWarning("Missing 'direction' for translation.");
+            return;
+        }
+
+        // initial filter based on common arguments 
+        List<GameObject> candidates = FilterObjectsByCommonArgs(actionCommand);
+
+        // parse direction argument 
+        Vector3 direction = ParseDirection(actionCommand.Arguments["direction"]);
+
+        // parse distance argument 
+        float distance = 1f;
+        if (actionCommand.Arguments.TryGetValue("distance", out string distStr))
+        {
+            float.TryParse(distStr.Replace("meters", "").Trim(), out distance);
+        }
+
+        foreach (var obj in candidates)
+        {
+            obj.transform.position += direction.normalized * distance;
         }
     }
 
     public void ExecuteSelection(ActionCommand actionCommand) {
+        List<GameObject> list_temp = new List<GameObject>();
+        List<GameObject> candidates = FilterObjectsByCommonArgs(actionCommand);
+
+        foreach (var obj in SelectorManager.Instance.currentTargets)
+        {
+            if (!candidates.Contains(obj))
+            {
+                obj.GetComponent<ObjectController>()?.ToggleHighlight();
+                list_temp.Add(obj);
+            }
+        }
+
+        foreach (var obj in list_temp) {
+            SelectorManager.Instance.RemoveFromSelection(obj);
+        }
+    }
+
+    public void ExecuteRotation(ActionCommand actionCommand)
+    {
+        // ensure required argument exists
+        if (!actionCommand.Arguments.ContainsKey("axis"))
+        {
+            Debug.LogWarning("Missing 'axis' for rotation.");
+            return;
+        }
+
+        // intial object filtering 
+        List<GameObject> candidates = FilterObjectsByCommonArgs(actionCommand);
+
+        // parse axis argument 
+        Vector3 axis = ParseAxis(actionCommand.Arguments["axis"]);
+
+        // parse angle argument 
+        float angle = 90f;
+        if (actionCommand.Arguments.TryGetValue("angle", out string angleStr))
+        {
+            float.TryParse(angleStr.Replace("degrees", "").Trim(), out angle);
+        }
+
+        foreach (var obj in candidates)
+        {
+            obj.transform.Rotate(axis, angle);
+        }
+    }
+
+    public void ExecuteScale(ActionCommand actionCommand)
+    {
+        // parse scale factor argument 
+        Vector3 scale = Vector3.one;
+        
+        if (actionCommand.Arguments.TryGetValue("scale_factor", out string factorStr) &&
+            float.TryParse(factorStr, out float factor))
+        {
+            // check if a specific axis is specified 
+            if (actionCommand.Arguments.TryGetValue("axis", out string axisStr))
+            {
+                Vector3 axis = ParseAxis(axisStr);
+                scale += axis * (factor - 1);
+            }
+            else // uniform scale
+            {
+                scale *= factor;
+            }
+        }
+
+        List<GameObject> candidates = FilterObjectsByCommonArgs(actionCommand);
+
+        foreach (var obj in candidates)
+        {
+            obj.transform.localScale = Vector3.Scale(obj.transform.localScale, scale);
+        }
+    }
+
+    private Vector3 ParseAxis(string axis)
+    {
+        axis = axis.ToLower();
+        if (axis == "x") return Vector3.right;
+        if (axis == "y") return Vector3.up;
+        if (axis == "z") return Vector3.forward;
+        return Vector3.zero;
+    }
+
+    private Vector3 ParseDirection(string dir)
+    {
+        dir = dir.ToLower();
+        if (dir.Contains("forward") || dir.Contains("further") || dir.Contains("farther")) return Camera.main.transform.forward;
+        if (dir.Contains("back") || dir.Contains("close") || dir.Contains("near")) return -Camera.main.transform.forward;
+        if (dir.Contains("left")) return -Camera.main.transform.right;
+        if (dir.Contains("right")) return Camera.main.transform.right;
+        if (dir.Contains("up")) return Vector3.up;
+        if (dir.Contains("down")) return Vector3.down;
+        return Vector3.zero;
+    }
+
+    private List<GameObject> FilterObjectsByCommonArgs(ActionCommand actionCommand)
+    {
         string objectType = actionCommand.Arguments["object_type"];
 
         // Step 1: Gather all matching objects by tag
         List<GameObject> candidates = new List<GameObject>();
-        List<GameObject> list_temp = new List<GameObject>();
         foreach (var obj in SelectorManager.Instance.currentTargets)
         {
             if (obj.CompareTag(objectType))
@@ -96,19 +232,7 @@ public class ActionExecutioner : MonoBehaviour
             candidates = candidates.Take(quantity).ToList();
         }
 
-        // Step 4: Deselect anything no longer in candidates
-        foreach (var obj in SelectorManager.Instance.currentTargets)
-        {
-            if (!candidates.Contains(obj))
-            {
-                obj.GetComponent<ObjectController>()?.ToggleHighlight();
-                list_temp.Add(obj);
-            }
-        }
-
-        foreach (var obj in list_temp) {
-            SelectorManager.Instance.RemoveFromSelection(obj);
-        }
+        return candidates;
     }
 
     private List<GameObject> ApplySpatialFilter(List<GameObject> objects, string filter)

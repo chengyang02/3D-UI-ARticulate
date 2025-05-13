@@ -43,6 +43,9 @@ public class WaypointMarker : MonoBehaviour
                 // Place a new waypoint at the hit point
                 Vector3 spawnPosition = hit.point;
                 GameObject waypoint = Instantiate(waypointPrefab, spawnPosition, Quaternion.identity);
+                
+                // make waypoint bigger'
+                waypoint.transform.localScale *= 4; 
 
                 // populate its component
                 WaypointController waypointController = waypoint.GetComponent<WaypointController>();
