@@ -60,8 +60,9 @@ public class OpenAIController : MonoBehaviour
             - Always express 'angle' as a number only (e.g., 45, 90). Do not include units like 'degrees' or 'deg'.
             - Always express 'scale_factor' as a number only (e.g., 1.5, 2). Do not include words like 'times', 'x', or 'scale'.
             - The value of 'axis' must be one of: x, y, or z. Do not use full words like 'vertical', 'horizontal', or 'up'.
-
-
+            - If the user says 'scale up by X' or 'make it bigger by X', interpret it as multiplying the size (scale_factor = X).
+            - If the user says 'scale down by X' or 'make it smaller by X', interpret it as dividing the size (scale_factor = 1 / X).
+            - If the user says 'make it half the size', scale_factor is 0.5.
 
             - All keys must be from these possible action arguments:
             ACTION SCHEMA:
