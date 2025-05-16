@@ -70,6 +70,7 @@ After selecting objects, record your command in one of two ways:
 #### Option 2: Keyboard Shortcut
 - Press **`B`** to **start recording**.
 - Press **`B`** again to **stop recording**.
+- In quest，could also use ray casting to click the Record Button
 
 ---
 
