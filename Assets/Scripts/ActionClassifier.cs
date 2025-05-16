@@ -63,6 +63,30 @@ public class ActionClassifier : MonoBehaviour
             color: green
             axis: Y
             angle: 90 degrees
+            
+            EXAMPLE 4
+            User Command: color the building red
+            Output:
+            action_type: color
+            object_type: building
+            color: red
+            
+            EXAMPLE 5
+            User Command: create a car beside the building
+            Output:
+            action_type: creation
+            object_type: car
+            reference_type: building
+            position: beside
+            
+            EXAMPLE 6
+            User Command: create a red car in front of the table
+            Output:
+            action_type: creation
+            object_type: car
+            reference_type: table
+            position: in front of
+            color: red
 
             Now classify this:
             User Command: {userInput}

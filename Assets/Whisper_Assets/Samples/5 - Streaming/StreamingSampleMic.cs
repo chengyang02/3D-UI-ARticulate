@@ -89,8 +89,6 @@ namespace Whisper.Samples
             print($"Segment updated: {segment.Result}");
         }
         
-        private string _lastCmd = ""; 
-
         private void OnSegmentFinished(WhisperResult segment)
         {
             // 注释掉命令处理，避免多次触发

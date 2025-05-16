@@ -110,32 +110,114 @@ public class VoiceCommandManager : MonoBehaviour
             return;
         }
 
-        // Parse and execute the classified response
-        ExecuteStructuredAction(JsonUtility.FromJson<VoiceAction>(response));
+        // Convert key-value format to JSON structure
+        try
+        {
+            // Create a VoiceAction manually from the response
+            VoiceAction action = new VoiceAction();
+            Target target = new Target();
+            action.target = target;
+            
+            // Parse lines like "key: value"
+            var lines = response.Split('\n');
+            foreach (var line in lines)
+            {
+                var parts = line.Split(new[] { ':' }, 2);
+                if (parts.Length != 2) continue;
+                
+                string key = parts[0].Trim().ToLower();
+                string value = parts[1].Trim();
+                
+                switch (key)
+                {
+                    case "action_type":
+                        action.action_type = value;
+                        break;
+                    case "object_type":
+                        target.object_type = value;
+                        break;
+                    case "color":
+                        // Store the color value - for color actions, this is the NEW color
+                        if (action.action_type == "color")
+                            action.color = value; 
+                        else 
+                            target.color = value; // For other actions, this is the target's current color
+                        break;
+                    case "axis":
+                        action.axis = value;
+                        break;
+                    case "angle":
+                        action.angle = value;
+                        break;
+                    case "direction":
+                        action.direction = value;
+                        break;
+                    case "distance":
+                        action.distance = value;
+                        break;
+                    case "scale_factor":
+                        action.scale_factor = value;
+                        break;
+                }
+            }
+            
+            // Verify we have at least the required fields
+            if (!string.IsNullOrEmpty(action.action_type) && !string.IsNullOrEmpty(target.object_type))
+            {
+                Debug.Log($"Converted response to action: {action.action_type} on {target.object_type}");
+                if (action.action_type == "color")
+                    Debug.Log($"Color change: new color = {action.color}");
+                ExecuteStructuredAction(action);
+            }
+            else
+            {
+                Debug.LogWarning("❌ Failed to extract required fields from LLM response");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"❌ Error parsing LLM response: {e.Message}");
+        }
     }
 
     private void ExecuteStructuredAction(VoiceAction action)
     {
+        if (action == null || action.target == null)
+        {
+            Debug.LogWarning("🚫 Invalid action structure");
+            return;
+        }
+        
         string type = action.target.object_type.ToLower();
-        string color = action.target.color?.ToLower();
+        string targetColor = action.target.color?.ToLower();
+        
+        Debug.Log($"Processing action: {action.action_type} for {type} (target color: {targetColor})");
 
         switch (action.action_type.ToLower())
         {
             case "selection":
-                HandleSelection(type, color);
+                HandleSelection(type, targetColor);
                 break;
             case "rotation":
-                HandleRotation(type, color, action.axis, action.angle);
+                HandleRotation(type, targetColor, action.axis, action.angle);
                 break;
             case "translation":
             case "move":
-                HandleTranslation(type, color, action.direction, action.distance);
+                HandleTranslation(type, targetColor, action.direction, action.distance);
                 break;
             case "scale":
-                HandleScale(type, color, action.scale_factor);
+                HandleScale(type, targetColor, action.scale_factor);
                 break;
             case "color":
-                HandleColorChange(type, color, action.color);
+                // Check if color is present in either action.color or action.target.color (fallback)
+                string newColor = action.color;
+                if (string.IsNullOrEmpty(newColor))
+                {
+                    Debug.LogWarning("⚠️ Color change requested but no new color specified. Using red as default.");
+                    newColor = "red";
+                }
+                HandleColorChange(type, targetColor, newColor);
+                Debug.Log($"⚠️ Color change parameters: type={type}, targetColor={targetColor}, newColor={newColor}");
                 break;
             default:
                 Debug.LogWarning($"🚫 Unknown action type: {action.action_type}");
@@ -286,15 +368,15 @@ public class VoiceCommandManager : MonoBehaviour
 
     private Color ColorFromString(string color)
     {
-        return color.ToLower() switch
+        if (string.IsNullOrEmpty(color)) return Color.white;
+        
+        color = color.ToLower();
+        if (namedColors.TryGetValue(color, out Color result))
         {
-            "red" => Color.red,
-            "blue" => Color.blue,
-            "green" => Color.green,
-            "yellow" => Color.yellow,
-            "black" => Color.black,
-            "white" => Color.white,
-            _ => Color.gray
-        };
+            return result;
+        }
+        
+        // Default fallback
+        return Color.gray;
     }
 }

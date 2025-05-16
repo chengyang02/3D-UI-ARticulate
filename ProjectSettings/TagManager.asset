@@ -16,6 +16,11 @@ TagManager:
   - building
   - tree
   - bench
+  - Ladder
+  - LadderLandingPad
+  - Sphere
+  - taxi
+  - suv
   layers:
   - Default
   - TransparentFX

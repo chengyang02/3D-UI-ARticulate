@@ -10,8 +10,9 @@ public class SelectorManager : MonoBehaviour
     public GameObject selectionSpherePrefab;
     public XRRayInteractor rayInteractor;
     public GameObject parentInteractable; 
-    private bool groupUpdateNeeded = false; 
-
+    
+    // This field was unused - either remove it or uncomment the LateUpdate method below
+    // private bool groupUpdateNeeded = false; 
 
     [Header("Settings")] 
     public float offsetFromController = 0.5f;
@@ -29,58 +30,60 @@ public class SelectorManager : MonoBehaviour
         }
     }
 
-    // void LateUpdate()
-    // {
-    //     if (!groupUpdateNeeded) return;
+    // Uncomment if you need group updating functionality
+    /*
+    void LateUpdate()
+    {
+        if (!groupUpdateNeeded) return;
 
-    //     groupUpdateNeeded = false;
+        groupUpdateNeeded = false;
 
-    //     // var vic = FindObjectOfType<Voice2Action.VoiceIntentController>();
-    //     // Debug.Log(vic);
-    //     // vic?.RefreshControllers();
+        // var vic = FindObjectOfType<Voice2Action.VoiceIntentController>();
+        // Debug.Log(vic);
+        // vic?.RefreshControllers();
 
-    //     if (currentTargets.Count == 0) return;
+        if (currentTargets.Count == 0) return;
 
-    //     // Unparent and destroy old tag groups
-    //     foreach (Transform child in parentInteractable.transform)
-    //     {
-    //         foreach (Transform obj in child)
-    //         {
-    //             obj.SetParent(null, true);
-    //         }
-    //         Destroy(child.gameObject);
-    //     }
+        // Unparent and destroy old tag groups
+        foreach (Transform child in parentInteractable.transform)
+        {
+            foreach (Transform obj in child)
+            {
+                obj.SetParent(null, true);
+            }
+            Destroy(child.gameObject);
+        }
 
-    //     Dictionary<string, GameObject> tagGroups = new Dictionary<string, GameObject>();
+        Dictionary<string, GameObject> tagGroups = new Dictionary<string, GameObject>();
 
-    //     foreach (GameObject obj in currentTargets)
-    //     {
-    //         string tag = obj.tag;
+        foreach (GameObject obj in currentTargets)
+        {
+            string tag = obj.tag;
 
-    //         if (!tagGroups.ContainsKey(tag))
-    //         {
-    //             GameObject group = new GameObject(tag);
-    //             group.transform.SetParent(parentInteractable.transform);
-    //             tagGroups[tag] = group;
-    //         }
+            if (!tagGroups.ContainsKey(tag))
+            {
+                GameObject group = new GameObject(tag);
+                group.transform.SetParent(parentInteractable.transform);
+                tagGroups[tag] = group;
+            }
 
-    //         var interactable = obj.GetComponent<XRGrabInteractable>();
-    //         bool wasEnabled = false;
+            var interactable = obj.GetComponent<XRGrabInteractable>();
+            bool wasEnabled = false;
 
-    //         if (interactable != null && interactable.enabled)
-    //         {
-    //             wasEnabled = true;
-    //             interactable.enabled = false; // disable before reparenting
-    //         }
+            if (interactable != null && interactable.enabled)
+            {
+                wasEnabled = true;
+                interactable.enabled = false; // disable before reparenting
+            }
 
-    //         obj.transform.SetParent(tagGroups[tag].transform, true);
-    //         Debug.Log($"[GroupFix] {obj.name} parented to {tagGroups[tag].name}");
+            obj.transform.SetParent(tagGroups[tag].transform, true);
+            Debug.Log($"[GroupFix] {obj.name} parented to {tagGroups[tag].name}");
 
-    //         if (wasEnabled)
-    //             interactable.enabled = true; // re-enable after parenting
-    //     }
-    // }
-
+            if (wasEnabled)
+                interactable.enabled = true; // re-enable after parenting
+        }
+    }
+    */
 
     public void ToggleSelector()
     {
@@ -154,12 +157,12 @@ public class SelectorManager : MonoBehaviour
     public void AddToSelection(GameObject obj)
     {
         currentTargets.Add(obj);
-        groupUpdateNeeded = true;
+        // groupUpdateNeeded = true;
     }
 
     public void RemoveFromSelection(GameObject obj)
     {
         currentTargets.Remove(obj);
-        groupUpdateNeeded = true;
+        // groupUpdateNeeded = true;
     }
 }

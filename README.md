@@ -2,9 +2,9 @@
 
 **Team Name**: *ARticulate*  
 **Team Members**:  
-- Cheng Yang (cy2748)  
+- Charlie Zou (jz3331)
+- Cheng Yang (cy2748)
 - Linlin Zhang (lz2981)  
-- Charlie Zou (jz3331)  
 - Tans Rosen (njr2145)  
 
 **Advisor**: Ben Yang
@@ -19,9 +19,15 @@ Users can use controllers (e.g., **ray selection** or **sphere selection**) or *
 
 - Select groups of objects  
 - Refine their selections  
-- Manipulate objects (e.g., **scale**, **rotate**, **move**)  
+- Manipulate objects (e.g., **scale**, **rotate**, **move**, **color**)  
+- Create new objects
 
 The system also allows users to **label** and **navigate** to different parts of the scene to support easier wayfinding. Our goal is to make interaction with complex 3D environments as seamless as having a conversation.
+
+---
+
+## 🎥 Demo Video (narrated)
+[Watch on YouTube](https://youtu.be/bjF8SYHtW7g)
 
 ---
 
@@ -33,17 +39,19 @@ The system also allows users to **label** and **navigate** to different parts of
 - Press **`Y`** to activate the right controller.
 - Aim at an object.
 - Press **`G`** to select it.
+- **Implementation**: Uses `SelectorManager.cs` for ray-based selection and highlighting.
 
 #### 🟠 Sphere Selection (Right Controller)
 - Press **`Y`** to activate the right controller.
 - Press **`N`** to spawn the selection sphere.
+- **Implementation**: Uses sphere colliders to detect and select objects.
 
 ##### 🎚️ Adjust Sphere Size (Left Controller)
 - Press **`T`** to activate the left controller.
-- Press **`B`** to make the sphere bigger.
-- Press **`N`** to make it smaller.
+- Press **`B`** to make the sphere smaller.
+- Press **`N`** to make it bigger.
 
-✅ Selected objects will have a **yellow highlight**.
+✅ Selected objects will have a **yellow highlight** (using `EPOOutline` system).
 
 ---
 
@@ -54,6 +62,7 @@ After selecting objects, record your command in one of two ways:
 #### Option 1: UI Buttons
 - Click **Record** on the UI panel to begin.
 - Click **Stop** to finish.
+- **Implementation**: Uses `WhisperManager.cs` for speech recognition.
 
 #### Option 2: Keyboard Shortcut
 - Press **`B`** to **start recording**.
@@ -66,6 +75,7 @@ After selecting objects, record your command in one of two ways:
 - Press **`T`** to activate the left controller.
 - When the ray turns **white**, **left-click** to create a waypoint.
 - To cancel: click again without moving the ray.
+- **Implementation**: Uses waypoint prefabs and navigation system.
 
 ---
 
@@ -74,28 +84,65 @@ After selecting objects, record your command in one of two ways:
 - Press **`Y`** to activate the right controller.
 - When the ray turns **white** and a **spinning teleport icon** appears:
   - Press **`G`** to teleport.
+- **Implementation**: Uses XR Interaction Toolkit's teleportation system.
 
 ⚠️ **First-time teleport bug**:  
-If you fall underground, press **`Q`** to move up or **`E`** to move down. Once you move up and the **spinning teleport icon** appears again on the floor, teleporting will work normally
+If you fall underground, press **`Q`** to move up or **`E`** to move down. Once you move up and the **spinning teleport icon** appears again on the floor, teleporting will work normally.
+
+---
+
+### ↩️ Undo & Redo Functionality
+
+- **Undo**: Click the **Undo** button or press **Ctrl+Z** to revert the last action.
+- **Redo**: Click the **Redo** button or press **Ctrl+Y** to reapply the undone action.
+- **Implementation**: `UndoRedoManager.cs` manages UI connections while `ActionExecutioner.cs` tracks command history.
 
 ---
 
 ## 🗣️ Example Voice Commands
 
-### ✅ Specific Object Manipulation
-- “Scale the trees by a factor of 1.5.”
-- “Rotate the car 90 degrees around the Y axis.”
-- “Move the bench forward by 2 meters.”
+### ✅ Selection Commands
+- "Select the red building."
+- "Select all trees."
+- "Select the tallest car."
+- "Select the closest building."
+- **Implementation**: `FilterObjectsByCommonArgs` method in `ActionExecutioner.cs` handles filtering.
+
+### 🔄 Manipulation Commands
+- "Scale the trees by a factor of 1.5."
+- "Rotate the car 90 degrees around the Y axis."
+- "Move the bench forward by 2 meters."
+- "Color the building blue."
+- **Implementation**: Each operation is handled by dedicated methods in `ActionExecutioner.cs`.
+
+### 🏗️ Creation Commands
+- "Create a red cube."
+- "Add a tree near the building."
+- "Generate a blue sphere."
+- **Implementation**: `ExecuteCreation` and `CreateObject` methods in `ActionExecutioner.cs`.
 
 ### 🗣️ Natural Language Prompts
-- “I want the tree to be a little taller.”
-- “Turn the car upside down.”
-- “Make the bench smaller.”
-- “Move the trees closer to the buildings.”
-- “I want the buildings to rotate to the left.”
-- “Flip the bench backward.”
+- "I want the tree to be a little taller."
+- "Turn the car upside down."
+- "Make the bench smaller."
+- "Move the trees closer to the buildings."
+- "I want the buildings to rotate to the left."
+- "Flip the bench backward."
 
 ⚠️ **Note**: The system uses LLMs to interpret voice commands.  
 The result **may not exactly match your spoken prompt**, as the model may fill in missing details like direction, amount, or axis based on context and past patterns.
+
+---
+
+## 🧩 Technical Implementation
+
+The system consists of several key components:
+
+1. **Voice Recognition**: Uses Whisper for accurate speech-to-text transcription
+2. **Command Interpretation**: Uses OpenAI's models to parse natural language into actionable commands
+3. **Speech Correction**: Handles common misrecognitions like "read" → "red" or "beauty" → "building"
+4. **Action Execution**: `ActionExecutioner.cs` processes parsed commands and performs operations
+5. **Selection System**: Multiple selection methods (ray, sphere, voice) with filtering capabilities
+6. **History Management**: Tracks object states for undo/redo functionality
 
 ---

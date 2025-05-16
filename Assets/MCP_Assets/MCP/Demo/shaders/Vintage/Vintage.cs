@@ -31,14 +31,7 @@ public class Vintage : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		if(!SystemInfo.supportsImageEffects)
-		{
-			enabled = false;
-			return;
-		}
-		
 		curShader = Shader.Find("Custom/Vintage");
-		
 	}
 	
 	void OnRenderImage (RenderTexture sourceTexture, RenderTexture destTexture)
@@ -57,8 +50,6 @@ public class Vintage : MonoBehaviour {
 		{
 			Graphics.Blit(sourceTexture, destTexture);	
 		}
-		
-		
 	}
 	
 	// Update is called once per frame
@@ -72,8 +63,5 @@ public class Vintage : MonoBehaviour {
 		{
 			DestroyImmediate(curMaterial);	
 		}
-		
 	}
-	
-	
 } 

@@ -100,6 +100,20 @@ public class ActionSchemaRegistry : MonoBehaviour
             new ActionArgument("scale_factor", false),
             new ActionArgument("axis", false)
         }).ToList());
+        
+        schemas["color"] = new ActionSchema("color", TargetDescriptionArgs.Concat(new List<ActionArgument> {
+            new ActionArgument("color", true)
+        }).ToList());
+        
+        schemas["creation"] = new ActionSchema("creation", new List<ActionArgument> {
+            new ActionArgument("object_type", true),  // What to create (car, tree, etc.)
+            new ActionArgument("reference_type", false), // What it's placed relative to (building, etc.)
+            new ActionArgument("position", false),    // Where to place it (left, right, front, etc.)
+            new ActionArgument("distance", false),    // How far from the reference object
+            new ActionArgument("color", false),       // Initial color
+            new ActionArgument("scale", false),       // Initial scale
+            new ActionArgument("quantity", false)     // How many to create
+        });
     }
 
     public ActionSchema GetSchema(string actionType)
