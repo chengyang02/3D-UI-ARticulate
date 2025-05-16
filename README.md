@@ -7,7 +7,10 @@
 - Linlin Zhang (lz2981)  
 - Tans Rosen (njr2145)  
 
-**Advisor**: Ben Yang
+**Special Thanks To：**
+- Professor: Prof. Steven Feiner
+- TAs: Leo Li；Max Segan
+- Advisor: Ben Yang
 
 ---
 
