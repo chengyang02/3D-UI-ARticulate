@@ -27,11 +27,11 @@ The system also allows users to **label** and **navigate** to different parts of
 ---
 
 ## 🎥 Demo Video (narrated)
-[Watch on YouTube](https://youtu.be/bjF8SYHtW7g)
+https://youtu.be/v5MnWmMCoeM
 
 ---
 
-## 🎮 How to Use (Playmode Instructions)
+## 🎮 How to Use (Playmode Instructions & Quest)
 
 ### 🎯 Selection
 
@@ -93,8 +93,8 @@ If you fall underground, press **`Q`** to move up or **`E`** to move down. Once 
 
 ### ↩️ Undo & Redo Functionality
 
-- **Undo**: Click the **Undo** button or press **Ctrl+Z** to revert the last action.
-- **Redo**: Click the **Redo** button or press **Ctrl+Y** to reapply the undone action.
+- **Undo**: Click the **Undo** button or press **Ctrl+Z** to revert the last action. If in quest, please use ray casting.
+- **Redo**: Click the **Redo** button or press **Ctrl+Y** to reapply the undone action. If in quest, please use ray casting.
 - **Implementation**: `UndoRedoManager.cs` manages UI connections while `ActionExecutioner.cs` tracks command history.
 
 ---
@@ -146,3 +146,9 @@ The system consists of several key components:
 6. **History Management**: Tracks object states for undo/redo functionality
 
 ---
+## ❤️UI Instruction Panel
+
+General XR interaction shown when User Enter the Scene
+
+1. **Blue - HelpButton**: User could see more detailed sample voice commands
+2. **Red- CloseButton**: User could close the panel (it will also disappear if user click on scene or user did not react for some time)
